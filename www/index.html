@@ -3,23 +3,27 @@
     <head>
         <meta charset="utf-8" />
         <title>experiment 001</title>
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+<!--        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+-->
         <style>
             .test {
                 padding-left: 10%;
                 background-color: white;
-                text-color: black;
+                color: black;
             }
             .expect {
                 padding-left: 10%;
                 background-color: cyan;
-                text-color: grey;
+                color: grey;
             }
             #results {
                 padding-left: 10%;
                 background-color: white;
-                text-color: blue;
+                color: blue;
             }
+	    #test-data {
+	    	display: none;
+	    }
         </style>
     </head>
     <body>
@@ -28,6 +32,9 @@
             <h2>Simple CSV line parsing</h2>
         </header>
         <section id="test-data">
+            <pre id="test-line-0" class="test">,,</pre>
+            <pre id="expect-line-0" class="expect">["", "", ""]</pre>
+<!--DEBUG START
             <pre id="test-line-1" class="test">one,two, three</pre>
             <pre id="expect-line-1" class="expect">["one", "two", "three"]</pre>
             
@@ -63,6 +70,7 @@
             
             <pre id="test-line-12" class="test">"one's,'s and two, three</pre>
             <pre id="expect-line-12" class="expect">false</pre>
+DEBUG END-->
         </section>
         <section>Results<br /><pre id="results"></pre></section>
         <footer>

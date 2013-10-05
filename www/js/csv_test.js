@@ -34,7 +34,7 @@
     if (tl !== el) {
         print(output, "Test data is not balanced");
     }
-    for (i = 0; i < tl & i < el; i += 1) {
+    for (i = 0; i < tl && i < el; i += 1) {
         expected = JSON.parse(expect_elements[i].textContent);
         if (typeof expected === "object" || expected === false) {
             tested = CSV.parseLine(test_elements[i].textContent);
