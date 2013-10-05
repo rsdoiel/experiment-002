@@ -8,26 +8,43 @@
  */
 (function (outerspace) {
     "use strict";
+
     function modules(namespace, module) {
-        var keys = Object.keys(module),
+    	var moduleCache = outerspace.Modules || {},
+            keys = Object.keys(module),
             i = 0,
             l = 0,
             ky; 
-        if (outerspace[name] === undefined) {
-            outerspace[name] = exports;
+        if (moduleCache[namespace] === undefined) {
+	    moduleCache[namespace] = module;
         } else {
             for (i = 0, l = keys.length; i < l; i += 1) {
                 ky = keys[i];
-                if (exports.hasOwnProperty(ky) &&
-                        outerspace[name][ky] === undefined) {
-                    outerspace[name][ky] = exports[ky];
+                if (module.hasOwnProperty(ky) &&
+                        moduleCache[namespace][ky] === undefined) {
+                    moduleCache[namespace][ky] = module[ky];
                 } else {
                     throw "property " + ky +
-                        " already exists in object " + name;
+                        " already exists in object " + namespace;
                 }
             }
         }
+	outerspace.Modules = moduleCache;
         return outerspace;
     }
-    global.modules = modules;
+
+    function require(name) {
+    	var moduleCache;
+	if (outerspace.Modules === undefined) {
+		throw "no modules found.";
+	}
+
+    	if (outerspace.Modules[name] === undefined) {
+	    throw "module named " + name + " doesn't exist";
+	}
+	return outerspace.Modules[name];
+    }
+
+    outerspace.modules = modules;
+    outerspace.require = require;
 }(this));

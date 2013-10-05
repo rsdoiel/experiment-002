@@ -7,7 +7,8 @@
  */
 (function () {
     "use strict";
-    var test_elements = document.querySelectorAll("pre.test"),
+    var CSV = require("CSV"), 
+    	test_elements = document.querySelectorAll("pre.test"),
         expect_elements = document.querySelectorAll("pre.expect"),
         i = 0,
         j = 0,

@@ -7,13 +7,11 @@
  */
 (function () {
     "use strict";
-    var exports = {};
                 
     function parseLine(line) {
         return false;
     }
-    exports.parseLine = parseLine;
                 
     // Export as module
-    modules("CSV", exports));
+    modules("CSV", {parseLine: parseLine});
 }());
