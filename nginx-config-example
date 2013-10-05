@@ -1,0 +1,15 @@
+
+#
+# Static web services via localhost
+#
+server {
+    listen localhost:80;
+    server_name localhost;
+    root  /sites/local.local;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
