@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>experiment 001</title>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    </head>
+    <body>
+        <header>
+            <h1>Experiment 001</h1>
+            <h2>Simple CSV line parsing</h2>
+        </header>
+        <section id="test-data">
+            <pre id="test-line-1">one,two, three</pre><pre id="expect-line-1">["one", "two", "three"]</pre>
+            <pre id="test-line-2">one,"two", three</pre><pre id="expect-line-2">["one", "two", "three"]</pre>
+            <pre id="test-line-3">one,two, 'three'</pre><pre id="expect-line-2">["one", "two", "three"]</pre>
+            <pre id="test-line-4">"one",two, 'three'</pre><pre id="expect-line-2">["one", "two", "three"]</pre>
+            <pre id="test-line-5">"one","two's", 'three'</pre><pre id="expect-line-2">["one", "two's", "three"]</pre>
+            <pre id="test-line-6">'"one',"two's", 'three'</pre><pre id="expect-line-2">["one", "two's", "three"]</pre>
+            <pre id="test-line-7">'"one','two\'s', 'three'</pre><pre id="expect-line-2">["one", "two's", "three"]</pre>
+            <pre id="test-line-8">"\"one\"","two\'s", "'three'"</pre><pre id="expect-line-2">["\"one\"", "two's", "'three'"]</pre>
+            <pre id="test-line-9">'"\"one\"","two\'s", "'three'"'</pre><pre id="expect-line-2">false</pre>
+            <pre id="test-line-10">'"\"one\"","two\'s", "\'three\'"'</pre><pre id="expect-line-2">["\"\\\"one\\\"\",\"two\\'s\", \"\\'three\\'\""]</pre>
+            <pre id="test-line-9">one's,'s and two, three</pre><pre id="expect-line-9">["one's", "'s and two", "three"]</pre>
+            <pre id="test-line-9">"one's,'s and two, three</pre><pre id="expect-line-9">false</pre>
+        </section>
+        <footer>
+        </footer>
+    </body>
+</html>
