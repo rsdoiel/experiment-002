@@ -4,6 +4,23 @@
         <meta charset="utf-8" />
         <title>experiment 001</title>
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+        <style>
+            .test {
+                padding-left: 10%;
+                background-color: white;
+                text-color: black;
+            }
+            .expect {
+                padding-left: 10%;
+                background-color: cyan;
+                text-color: grey;
+            }
+            #results {
+                padding-left: 10%;
+                background-color: white;
+                text-color: blue;
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -11,20 +28,47 @@
             <h2>Simple CSV line parsing</h2>
         </header>
         <section id="test-data">
-            <pre id="test-line-1">one,two, three</pre><pre id="expect-line-1">["one", "two", "three"]</pre>
-            <pre id="test-line-2">one,"two", three</pre><pre id="expect-line-2">["one", "two", "three"]</pre>
-            <pre id="test-line-3">one,two, 'three'</pre><pre id="expect-line-2">["one", "two", "three"]</pre>
-            <pre id="test-line-4">"one",two, 'three'</pre><pre id="expect-line-2">["one", "two", "three"]</pre>
-            <pre id="test-line-5">"one","two's", 'three'</pre><pre id="expect-line-2">["one", "two's", "three"]</pre>
-            <pre id="test-line-6">'"one',"two's", 'three'</pre><pre id="expect-line-2">["one", "two's", "three"]</pre>
-            <pre id="test-line-7">'"one','two\'s', 'three'</pre><pre id="expect-line-2">["one", "two's", "three"]</pre>
-            <pre id="test-line-8">"\"one\"","two\'s", "'three'"</pre><pre id="expect-line-2">["\"one\"", "two's", "'three'"]</pre>
-            <pre id="test-line-9">'"\"one\"","two\'s", "'three'"'</pre><pre id="expect-line-2">false</pre>
-            <pre id="test-line-10">'"\"one\"","two\'s", "\'three\'"'</pre><pre id="expect-line-2">["\"\\\"one\\\"\",\"two\\'s\", \"\\'three\\'\""]</pre>
-            <pre id="test-line-9">one's,'s and two, three</pre><pre id="expect-line-9">["one's", "'s and two", "three"]</pre>
-            <pre id="test-line-9">"one's,'s and two, three</pre><pre id="expect-line-9">false</pre>
+            <pre id="test-line-1" class="test">one,two, three</pre>
+            <pre id="expect-line-1" class="expect">["one", "two", "three"]</pre>
+            
+            <pre id="test-line-2" class="test">one,"two", three</pre>
+            <pre id="expect-line-2" class="expect">["one", "two", "three"]</pre>
+            
+            <pre id="test-line-3" class="test">one,two, 'three'</pre>
+            <pre id="expect-line-3" class="expect">["one", "two", "three"]</pre>
+            
+            <pre id="test-line-4" class="test">"one",two, 'three'</pre>
+            <pre id="expect-line-4" class="expect">["one", "two", "three"]</pre>
+            
+            <pre id="test-line-5" class="test">"one","two's", 'three'</pre>
+            <pre id="expect-line-5" class="expect">["one", "two's", "three"]</pre>
+            
+            <pre id="test-line-6" class="test">'"one',"two's", 'three'</pre>
+            <pre id="expect-line-6" class="expect">["one", "two's", "three"]</pre>
+            
+            <pre id="test-line-7" class="test">'"one','two\'s', 'three'</pre>
+            <pre id="expect-line-7" class="expect">["one", "two's", "three"]</pre>
+            
+            <pre id="test-line-8" class="test">"\"one\"","two\'s", "'three'"</pre>
+            <pre id="expect-line-8" class="expect">["\"one\"", "two's", "'three'"]</pre>
+            
+            <pre id="test-line-9" class="test">'"\"one\"","two\'s", "'three'"'</pre>
+            <pre id="expect-line-9" class="expect">false</pre>
+            
+            <pre id="test-line-10" class="test">'"\"one\"","two\'s", "\'three\'"'</pre>
+            <pre id="expect-line-10" class="expect">["\"\\\"one\\\"\",\"two\\'s\", \"\\'three\\'\""]</pre>
+            
+            <pre id="test-line-11" class="test">one's,'s and two, three</pre>
+            <pre id="expect-line-11" class="expect">["one's", "'s and two", "three"]</pre>
+            
+            <pre id="test-line-12" class="test">"one's,'s and two, three</pre>
+            <pre id="expect-line-12" class="expect">false</pre>
         </section>
+        <section>Results<br /><pre id="results"></pre></section>
         <footer>
         </footer>
+        <script src="js/modules.js"></script>
+        <script src="js/csv.js"></script>
+        <script src="js/csv_test.js"></script>
     </body>
 </html>
