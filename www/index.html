@@ -28,49 +28,68 @@
     </head>
     <body>
         <header>
-            <h1>Experiment 001</h1>
-            <h2>Simple CSV line parsing</h2>
+            <h1>Experiment 002</h1>
+            <h2>Simple CSV line</h2>
         </header>
         <section id="test-data">
-            <pre id="test-line-0" class="test">,,</pre>
-            <pre id="expect-line-0" class="expect">["", "", ""]</pre>
+            <pre class="test">,,</pre>
+            <pre class="expect">["", "", ""]</pre>
 
-            <pre id="test-line-1" class="test">one,two, three</pre>
-            <pre id="expect-line-1" class="expect">["one", "two", "three"]</pre>
+            <pre class="test">one,two,three</pre>
+            <pre class="expect">["one", "two", "three"]</pre>
+
+            <pre class="test">one,two, three</pre>
+            <pre class="expect">["one", "two", "three"]</pre>
+
+            <pre class="test">one,    two, three</pre>
+            <pre class="expect">["one", "two", "three"]</pre>
             
-            <pre id="test-line-2" class="test">one,"two", three</pre>
-            <pre id="expect-line-2" class="expect">["one", "two", "three"]</pre>
+            <pre class="test">     one,two,three</pre>
+            <pre class="expect">["one", "two", "three"]</pre>
             
-            <pre id="test-line-3" class="test">one,two, 'three'</pre>
-            <pre id="expect-line-3" class="expect">["one", "two", "three"]</pre>
+            <pre class="test">     one      ,   two      ,      three</pre>
+            <pre class="expect">["one", "two", "three"]</pre>
             
+            <pre class="test">one,"two", three</pre>
+            <pre class="expect">["one", "two", "three"]</pre>
+
+            <pre class="test">one,two, 'three'</pre>
+            <pre class="expect">["one", "two", "three"]</pre>
+
+            <pre class="test">"one",two, 'three'</pre>
+            <pre class="expect">["one", "two", "three"]</pre>
+            
+            <pre class="test">"one","two's", 'three'</pre>
+            <pre class="expect">["one", "two's", "three"]</pre>
+
+            <pre class="test">'one',"two's", 'three'</pre>
+            <pre class="expect">["one", "two's", "three"]</pre>
+            
+            <pre class="test">'one','two\'s', 'three'</pre>
+            <pre class="expect">["one", "two's", "three"]</pre>
+            
+            
+            <pre class="test">'"one',"two's", 'three'</pre>
+            <pre class="expect">["\"one", "two's", "three"]</pre>
+
+            <!-- Test escaped quotes -->            
+            <pre class="test">'"one','two\'s', 'three'</pre>
+            <pre class="expect">["\"one", "two's", "three"]</pre>
 <!--DEBUG START
-            <pre id="test-line-4" class="test">"one",two, 'three'</pre>
-            <pre id="expect-line-4" class="expect">["one", "two", "three"]</pre>
+            <pre class="test">"\"one\"","two\'s", "'three'"</pre>
+            <pre class="expect">["\"one\"", "two's", "'three'"]</pre>
             
-            <pre id="test-line-5" class="test">"one","two's", 'three'</pre>
-            <pre id="expect-line-5" class="expect">["one", "two's", "three"]</pre>
+            <pre class="test">'"\"one\"","two\'s", "'three'"'</pre>
+            <pre class="expect">false</pre>
             
-            <pre id="test-line-6" class="test">'"one',"two's", 'three'</pre>
-            <pre id="expect-line-6" class="expect">["one", "two's", "three"]</pre>
+            <pre class="test">'"\"one\"","two\'s", "\'three\'"'</pre>
+            <pre class="expect">["\"\\\"one\\\"\",\"two\\'s\", \"\\'three\\'\""]</pre>
             
-            <pre id="test-line-7" class="test">'"one','two\'s', 'three'</pre>
-            <pre id="expect-line-7" class="expect">["one", "two's", "three"]</pre>
+            <pre class="test">one's,'s and two, three</pre>
+            <pre class="expect">["one's", "'s and two", "three"]</pre>
             
-            <pre id="test-line-8" class="test">"\"one\"","two\'s", "'three'"</pre>
-            <pre id="expect-line-8" class="expect">["\"one\"", "two's", "'three'"]</pre>
-            
-            <pre id="test-line-9" class="test">'"\"one\"","two\'s", "'three'"'</pre>
-            <pre id="expect-line-9" class="expect">false</pre>
-            
-            <pre id="test-line-10" class="test">'"\"one\"","two\'s", "\'three\'"'</pre>
-            <pre id="expect-line-10" class="expect">["\"\\\"one\\\"\",\"two\\'s\", \"\\'three\\'\""]</pre>
-            
-            <pre id="test-line-11" class="test">one's,'s and two, three</pre>
-            <pre id="expect-line-11" class="expect">["one's", "'s and two", "three"]</pre>
-            
-            <pre id="test-line-12" class="test">"one's,'s and two, three</pre>
-            <pre id="expect-line-12" class="expect">false</pre>
+            <pre class="test">"one's,'s and two, three</pre>
+            <pre class="expect">false</pre>
 DEBUG END-->
         </section>
         <section>Results<br /><pre id="results"></pre></section>
