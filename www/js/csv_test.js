@@ -5,10 +5,12 @@
  * Released under the BSD 2-clause licensed.
  * See: http://opensource.org/licenses/BSD-2-Clause
  */
+/*jslint browser: true, indent: 4 */
+/*global require */
 (function () {
     "use strict";
-    var CSV = require("CSV"), 
-    	test_elements = document.querySelectorAll("pre.test"),
+    var CSV = require("CSV"),
+        test_elements = document.querySelectorAll("pre.test"),
         expect_elements = document.querySelectorAll("pre.expect"),
         i = 0,
         j = 0,
@@ -42,17 +44,17 @@
             ok = true;
             if (expected === false && tested !== false) {
                 ok = false;
-            } 
+            }
             if (Array.isArray(expected) === true) {
                 if (Array.isArray(tested)) {
                     if (expected.length !== tested.length) {
                         ok = false;
                     } else {
                         for (j = 0, l = expected.length; j < l; j += 1) {
-                             if (expected[j] !== tested[j]) {
-                                 ok = false;
-                                 j = l;
-                             }
+                            if (expected[j] !== tested[j]) {
+                                ok = false;
+                                j = l;
+                            }
                         }
                     }
                 } else {

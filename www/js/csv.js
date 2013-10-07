@@ -59,4 +59,4 @@
     }
     // Export as module
     modules("CSV", {parseLine: parseLine});
-}())
+}());
