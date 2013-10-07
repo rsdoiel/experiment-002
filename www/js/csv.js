@@ -13,6 +13,7 @@
     function parseLine(buf) {
         var delimiter = ',',
             escape = '\\',
+            eol = '\n',
             quote = '',
             cut_from = 0,
             cut_length = 0,
@@ -21,6 +22,17 @@
             l = 0,
             results = [];
         
+        function saveColumn(s) {
+            var quoted = '', l = s.length - 2;
+            s = s.trim();
+            if (s[0] === '"' || s[0] === "'") {
+                quoted = s[0];
+                s = s.substr(1, l).replace(new RegExp(escape + quoted, 'g'), quoted);
+            }
+            console.log("DEBUG saveColumn(" + s + ")");
+            return s;
+        }
+
         buf = buf.trim();
         console.log("DEBUG buf", buf);
         cut_from = 0;
@@ -37,38 +49,27 @@
                 "], cut_length = [",
                 cut_length,
                 "]"].join(""));
-            if (cur === delimiter && quote === '') {
+            if (cur === escape) {
+                console.log("DEBUG escape " + cur + " -> " + buf.substr(i, 3));
+                i += 2;
+                cut_length += 2;
+            } else if (cur === delimiter && quote === '') {
                 // save the column's data
-                results.push(buf.substr(cut_from, cut_length).trim());
-                console.log("DEBUG push(" + cut_from +
-                            ", " + cut_length + ") -->" +
-                            results[results.length - 1]);
-                cut_from = i + 1;
+                results.push(saveColumn(buf.substr(cut_from, cut_length)));
+                cut_from += 1;
                 cut_length = 0;
                 quote = '';
-            } else if (cur === escape && buf[i + 1] === quote) {
-                console.log("DEBUG escape " + cur + " -> " + buf[i + 1]);
-                i += 1;
-                cut_length += 1;
+            } else if (cur === quote) {
+                // Ending of a quote
+                results.push(saveColumn(buf.substr(cut_from, cut_length)));
+                cut_from += 1;
+                cut_length = 0;
+                quote = '';
             } else if ((cur === '"' || cur === "'") && quote === '') {
                 // Starting of a quote
+                cut_from += 1;
+                cut_length += 1;
                 quote = cur;
-                cut_from = i + 1;
-                cut_length = 0;
-            } else if (cur === quote) {
-                console.log("DEBUG end quote " + buf.substr(cut_from, cut_length));
-                // Ending of a quote
-                results.push(buf.substr(cut_from, cut_length).trim());
-                console.log("DEBUG push(" + cut_from +
-                            ", " + cut_length + ") -->" +
-                            results[results.length - 1]);
-                // Fast forward to next delimiter.
-                for (; i < l && buf[i] !== delimiter; i += 1) {
-                    // nothing to do but advance to the delimiter.
-                }
-                cut_from = i + 1;
-                cut_length = 0;
-                quote = '';
             } else {
                 cut_length += 1;
             }
