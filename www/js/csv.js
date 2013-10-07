@@ -26,7 +26,7 @@
             if (s[0] === '"' || s[0] === "'") {
                 // We have a quoted string so remove/unescape any quotes
                 // based on s[0]
-                s = s.substr(1, s.length - 2).replace(new RegExp(escape + quoted, 'g'), s[0]);
+                s = s.substr(1, s.length - 2).replace(new RegExp(escape + escape + s[0], 'g'), s[0]);
             }
             console.log("DEBUG saveColumn('" + s + "')");
             return s;
@@ -42,7 +42,7 @@
                 quote = '';
             } else if (cur === escape) {
                 console.log("DEBUG escape " + cur + " -> " + buf.substr(i, 3));
-                i += 2;
+                i += 1;
             } else if ((cur === '"' || cur === "'") && quote === '') {
                 // Starting of a quote
                 quote = cur;

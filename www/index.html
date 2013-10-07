@@ -75,13 +75,17 @@
             <!-- Test escaped quotes -->            
             <pre class="test">'"one','two\'s', 'three'</pre>
             <pre class="expect">["\"one", "two's", "three"]</pre>
-<!--DEBUG START
-            <pre class="test">"\"one\"","two\'s", "'three'"</pre>
+
+            <pre class="test">"\"one\"","two's", "'three'"</pre>
             <pre class="expect">["\"one\"", "two's", "'three'"]</pre>
             
-            <pre class="test">'"\"one\"","two\'s", "'three'"'</pre>
-            <pre class="expect">false</pre>
+            <pre class="test">"\"one\"","two\'s", "'three'"</pre>
+            <pre class="expect">["\"one\"", "two\\'s", "'three'"]</pre>
             
+            <pre class="test">'"\"one\"","two\'s", "'three'"'</pre>
+            <pre class="expect">['"\\"one\\"","two\\\'s", "', 'three\'"']</pre>
+            
+<!--DEBUG START
             <pre class="test">'"\"one\"","two\'s", "\'three\'"'</pre>
             <pre class="expect">["\"\\\"one\\\"\",\"two\\'s\", \"\\'three\\'\""]</pre>
             
