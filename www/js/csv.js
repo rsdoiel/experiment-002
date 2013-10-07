@@ -22,8 +22,11 @@
             results = [];
         
         function saveColumn(s) {
+            var l;
             s = s.trim();
-            if (s[0] === '"' || s[0] === "'") {
+            l = s.length - 1;
+            if ((s[0] === '"' && s[l] === '"') ||
+                    (s[0] === "'" && s[l] === "'")) {
                 // We have a quoted string so remove/unescape any quotes
                 // based on s[0]
                 s = s.substr(1, s.length - 2).replace(new RegExp(escape + escape + s[0], 'g'), s[0]);
@@ -32,23 +35,26 @@
             return s;
         }
 
-        console.log("DEBUG buf", buf);
+        console.log("\nDEBUG start", buf);
         for (i = 0, l = buf.length, cut_from = 0; i < l; i += 1) {
             cur = buf[i];
+            console.log("DEBUG cur", i, cur, quote);
             if (cur === delimiter && quote === '') {
                 // save the column's data
                 results.push(saveColumn(buf.substr(cut_from, i - cut_from)));
                 cut_from = i + 1;
                 quote = '';
             } else if (cur === escape) {
-                console.log("DEBUG escape " + cur + " -> " + buf.substr(i, 3));
                 i += 1;
+                console.log("DEBUG escaping -> " + buf.substr(i, 1));
             } else if ((cur === '"' || cur === "'") && quote === '') {
                 // Starting of a quote
                 quote = cur;
+                console.log("DEBUG active quote char", quote);
             } else if (cur === quote && quote !== "") {
                 // Ending of a quote
                 quote = '';
+                console.log("DEBUG closed quote");
             }
         }
         // get last column
