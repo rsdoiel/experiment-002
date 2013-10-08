@@ -10,8 +10,8 @@
 (function () {
     "use strict";
     var CSV = require("CSV"),
-        test_elements = document.querySelectorAll("pre.test"),
-        expect_elements = document.querySelectorAll("pre.expect"),
+        test_elements = document.querySelectorAll("pre.test-parseLine"),
+        expect_elements = document.querySelectorAll("pre.expect-parseLine"),
         i = 0,
         j = 0,
         l = 0,
@@ -33,6 +33,7 @@
         }
     }
 
+    // Tests for CSV.parseLine()
     if (tl !== el) {
         print(output, "Test data is not balanced");
     }
@@ -67,10 +68,31 @@
             } else {
                 print(output, "\tFailed");
                 print(output, "\t\tExpected:" + JSON.stringify(expected, null, 2));
-                print(output, "\t\tRecieved:" + JSON.stringify(tested, null, 2));
+                print(output, "\t\tReceived:" + JSON.stringify(tested, null, 2));
             }
         } else {
             print(output, i + ": error in test/expect data");
+        }
+    }
+    console.log("DEBUG setting up CSV.parse() test");
+    // Add tests for CSV.parse()
+    test_elements = document.querySelectorAll("pre.test-parse");
+    expect_elements = document.querySelectorAll("pre.expect-parse");
+    tl = test_elements.length;
+    el = expect_elements.length;
+    if (tl !== el) {
+        print(output, "Test data is not balanced");
+    }
+    for (i = 0; i < tl && i < el; i += 1) {
+       tested = CSV.parse(test_elements[0].textContent);
+       expected = JSON.parse(expect_elements[0].textContent);
+       print(output, i + ": " + test_elements[i].textContent);
+        if (expected.length === tested.length) {
+    	    print(output, "\tOK");
+        } else {
+    	    print(output, "\tFailed");
+    	    print(output, "Expected: " + JSON.stringify(expected, null, 2));
+	    print(output, "Received: " + JSON.stringify(tested, null, 2));
         }
     }
 }());

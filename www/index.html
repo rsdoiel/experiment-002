@@ -32,85 +32,100 @@
             <h2>Simple CSV line</h2>
         </header>
         <section id="test-data">
-            <pre class="test">,,</pre>
-            <pre class="expect">["", "", ""]</pre>
+            <pre class="test-parseLine">,,</pre>
+            <pre class="expect-parseLine">["", "", ""]</pre>
 
-            <pre class="test">one,two,three</pre>
-            <pre class="expect">["one", "two", "three"]</pre>
+            <pre class="test-parseLine">one,two,three</pre>
+            <pre class="expect-parseLine">["one", "two", "three"]</pre>
 
-            <pre class="test">one,two, three</pre>
-            <pre class="expect">["one", "two", "three"]</pre>
+            <pre class="test-parseLine">one,two, three</pre>
+            <pre class="expect-parseLine">["one", "two", "three"]</pre>
 
-            <pre class="test">one,    two, three</pre>
-            <pre class="expect">["one", "two", "three"]</pre>
+            <pre class="test-parseLine">one,    two, three</pre>
+            <pre class="expect-parseLine">["one", "two", "three"]</pre>
             
-            <pre class="test">     one,two,three</pre>
-            <pre class="expect">["one", "two", "three"]</pre>
+            <pre class="test-parseLine">     one,two,three</pre>
+            <pre class="expect-parseLine">["one", "two", "three"]</pre>
             
-            <pre class="test">     one      ,   two      ,      three</pre>
-            <pre class="expect">["one", "two", "three"]</pre>
+            <pre class="test-parseLine">     one      ,   two      ,      three</pre>
+            <pre class="expect-parseLine">["one", "two", "three"]</pre>
             
-            <pre class="test">one,"two", three</pre>
-            <pre class="expect">["one", "two", "three"]</pre>
+            <pre class="test-parseLine">one,"two", three</pre>
+            <pre class="expect-parseLine">["one", "two", "three"]</pre>
 
-            <pre class="test">one,two, 'three'</pre>
-            <pre class="expect">["one", "two", "three"]</pre>
+            <pre class="test-parseLine">one,two, 'three'</pre>
+            <pre class="expect-parseLine">["one", "two", "three"]</pre>
 
-            <pre class="test">"one",two, 'three'</pre>
-            <pre class="expect">["one", "two", "three"]</pre>
+            <pre class="test-parseLine">"one",two, 'three'</pre>
+            <pre class="expect-parseLine">["one", "two", "three"]</pre>
             
-            <pre class="test">"one","two's", 'three'</pre>
-            <pre class="expect">["one", "two's", "three"]</pre>
+            <pre class="test-parseLine">"one","two's", 'three'</pre>
+            <pre class="expect-parseLine">["one", "two's", "three"]</pre>
 
-            <pre class="test">'one',"two's", 'three'</pre>
-            <pre class="expect">["one", "two's", "three"]</pre>
+            <pre class="test-parseLine">'one',"two's", 'three'</pre>
+            <pre class="expect-parseLine">["one", "two's", "three"]</pre>
             
-            <pre class="test">'one','two\'s', 'three'</pre>
-            <pre class="expect">["one", "two's", "three"]</pre>
+            <pre class="test-parseLine">'one','two\'s', 'three'</pre>
+            <pre class="expect-parseLine">["one", "two's", "three"]</pre>
             
             
-            <pre class="test">'"one',"two's", 'three'</pre>
-            <pre class="expect">["\"one", "two's", "three"]</pre>
+            <pre class="test-parseLine">'"one',"two's", 'three'</pre>
+            <pre class="expect-parseLine">["\"one", "two's", "three"]</pre>
 
             <!-- Test escaped quotes -->            
-            <pre class="test">'"one','two\'s', 'three'</pre>
-            <pre class="expect">["\"one", "two's", "three"]</pre>
+            <pre class="test-parseLine">'"one','two\'s', 'three'</pre>
+            <pre class="expect-parseLine">["\"one", "two's", "three"]</pre>
 
-            <pre class="test">"\"one\"","two's", "'three'"</pre>
-            <pre class="expect">["\"one\"", "two's", "'three'"]</pre>
+            <pre class="test-parseLine">"\"one\"","two's", "'three'"</pre>
+            <pre class="expect-parseLine">["\"one\"", "two's", "'three'"]</pre>
             
-            <pre class="test">"\"one\"","two\'s", "'three'"</pre>
-            <pre class="expect">["\"one\"", "two\\'s", "'three'"]</pre>
+            <pre class="test-parseLine">"\"one\"","two\'s", "'three'"</pre>
+            <pre class="expect-parseLine">["\"one\"", "two\\'s", "'three'"]</pre>
             
-            <pre class="test">one's,'s and two, three</pre>
-            <pre class="expect">[
+            <pre class="test-parseLine">one's,'s and two, three</pre>
+            <pre class="expect-parseLine">[
                 "one's,'s and two",
                 "three"
             ]</pre>
 
-            <pre class="test">"one's,'s and two, three</pre>
-            <pre class="expect">[
+            <pre class="test-parseLine">"one's,'s and two, three</pre>
+            <pre class="expect-parseLine">[
                 "\"one's,'s and two, three"
             ]</pre>
             
-            <!-- NOTE: These next two are tricky. We close a quote but never
-            see another comma we really are describing one column of data -->
-            <pre class="test">'"\"one\"","two\'s", "'three'"'</pre>
-            <pre class="expect">[
+            <!-- NOTE: These next two are tricky. We close a quote
+	    but never see another comma we really are describing
+	    one column of data -->
+
+            <pre class="test-parseLine">'"\"one\"","two\'s", "'three'"'</pre>
+            <pre class="expect-parseLine">[
                        "\"\\\"one\\\"\",\"two's\", \"'three'\""
             ]</pre>
             
-            <pre class="test">'"\"one\"","two\'s", "\'three\'"'</pre>
-            <pre class="expect">[
+            <pre class="test-parseLine">'"\"one\"","two\'s", "\'three\'"'</pre>
+            <pre class="expect-parseLine">[
                        "\"\\\"one\\\"\",\"two's\", \"'three'\""
             ]</pre>
             
-            <!-- NOTE: This last one is even weirder. Since we have quoting mid string only
-            see the last comma. Is this a bug? I not sure the correct behavior. -->
-            <pre class="test">one's,'s and two, three</pre>
-            <pre class="expect">["one's,'s and two", "three"]</pre>
+            <!-- NOTE: This last one is even weirder. Since we have
+	    quoting mid string only see the last comma. Is this a 
+	    bug? I not sure the correct behavior. -->
+            <pre class="test-parseLine">one's,'s and two, three</pre>
+            <pre class="expect-parseLine">["one's,'s and two", "three"]</pre>
+
+	    <!--START CSV.parse() tests -->
+            <pre class="test-parse">c1,c2,c3
+	    one,two,three
+	    "four","five","six"
+	    'seven','eigth','nine'</pre>
+            <pre class="expect-parse">[
+	    	["c1", "c2", "c3"],
+		["one", "two", "three"],
+		["four", "five", "six"]
+	    ]</pre>
+	    <!--END CSV.parse() tests -->
         </section>
-        <section>Results<br /><pre id="results"></pre></section>
+        <section>Testing parseLine()<br /><pre id="results"></pre></section>
         <footer>
         </footer>
         <script src="js/modules.js"></script>
