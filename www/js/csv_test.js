@@ -74,7 +74,6 @@
             print(output, i + ": error in test/expect data");
         }
     }
-    console.log("DEBUG setting up CSV.parse() test");
     // Add tests for CSV.parse()
     test_elements = document.querySelectorAll("pre.test-parse");
     expect_elements = document.querySelectorAll("pre.expect-parse");

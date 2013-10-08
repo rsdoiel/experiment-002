@@ -38,7 +38,7 @@
 
         for (i = 0; i < l; i += 1) {
             cur = buf[i];
-	    if (cur === delimiter && quote === '') {
+            if ((cur === delimiter || cur === eol) && quote === '') {
                 // save the column's data
                 columns.push(saveColumn(buf.substr(cut_from, i - cut_from)));
                 cut_from = i + 1;
@@ -51,11 +51,11 @@
             } else if (cur === quote && quote !== "") {
                 // Ending of a quote
                 quote = '';
-	    } 
-	    // add the final column
-	    if (i === i_eof || cur === eol) {
-	        columns.push(saveColumn(buf.substr(cut_from)));
-	    }
+            } 
+            // add the final column
+            if (i === i_eof) {
+                columns.push(saveColumn(buf.substr(cut_from)));
+            }
         }
         return columns;
     }
@@ -72,9 +72,13 @@
 
         for (i = 0; i < l; i += 1) {
             cur = buf[i];
-            if (cur === delimiter && quote === '') {
+            if ((cur === delimiter || cur === eol) && quote === '') {
                 // save the column's data
                 columns.push(saveColumn(buf.substr(cut_from, i - cut_from)));
+                if (cur === eol) {
+                   rows.push(columns);
+                   columns = [];
+                }
                 cut_from = i + 1;
                 quote = '';
             } else if (cur === escape) {
@@ -86,12 +90,11 @@
                 // Ending of a quote
                 quote = '';
             }
-	    // add the final column
-	    if (cur === eol || i === i_eof) {
-	        columns.push(saveColumn(buf.substr(cut_from)));
+            // add the final column
+            if (i === i_eof) {
+                columns.push(saveColumn(buf.substr(cut_from)));
                 rows.push(columns);
-                columns = [];
-	    }
+            }
         }
         return rows;
     }
