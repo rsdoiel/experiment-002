@@ -37,6 +37,7 @@
     if (tl !== el) {
         print(output, "Test data is not balanced");
     }
+    print(output, "Testing CSV.parseLine()");
     for (i = 0; i < tl && i < el; i += 1) {
         expected = JSON.parse(expect_elements[i].textContent);
         if (typeof expected === "object" || expected === false) {
@@ -75,6 +76,7 @@
         }
     }
     // Add tests for CSV.parse()
+    print(output, "Testing CSV.parse()");
     test_elements = document.querySelectorAll("pre.test-parse");
     expect_elements = document.querySelectorAll("pre.expect-parse");
     tl = test_elements.length;
