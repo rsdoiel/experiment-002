@@ -6,10 +6,9 @@
  * See: http://opensource.org/licenses/BSD-2-Clause
  */
 /*jslint browser: true, indent: 4 */
-/*global require */
-(function () {
+(function (global) {
     "use strict";
-    var CSV = require("CSV"),
+    var CSV = global.CSV,
         test_elements = document.querySelectorAll("pre.test-parseLine"),
         expect_elements = document.querySelectorAll("pre.expect-parseLine"),
         i = 0,
@@ -98,4 +97,4 @@
             print(output, "Received: " + JSON.stringify(tested, null, 2));
         }
     }
-}());
+}(this));
