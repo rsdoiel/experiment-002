@@ -7,7 +7,7 @@
  */
 /*jslint browser: true, indent: 4 */
 /*global console, modules */
-(function () {
+(function (global) {
     "use strict";
     var delimiter = ',',
         escape = '\\',
@@ -18,15 +18,18 @@
         s = s.trim();
         l = s.length - 1;
         if ((s[0] === '"' && s[l] === '"') ||
-               (s[0] === "'" && s[l] === "'")) {
+                (s[0] === "'" &&
+                 s[l] === "'")) {
             // We have a quoted string so remove/unescape any quotes
             // based on s[0]
             s = s.substr(1, s.length - 2).replace(
-                new RegExp(escape + escape + s[0], 'g'), s[0]);
+                new RegExp(escape + escape + s[0], 'g'),
+                s[0]
+            );
         }
         return s;
     }
-  
+
     function parseLine(buf) {
         var quote = '',
             cut_from = 0,
@@ -51,7 +54,7 @@
             } else if (cur === quote && quote !== "") {
                 // Ending of a quote
                 quote = '';
-            } 
+            }
             // add the final column
             if (i === i_eof) {
                 columns.push(saveColumn(buf.substr(cut_from)));
@@ -59,7 +62,7 @@
         }
         return columns;
     }
-    
+
     function parse(buf) {
         var quote = '',
             cut_from = 0,
@@ -76,8 +79,8 @@
                 // save the column's data
                 columns.push(saveColumn(buf.substr(cut_from, i - cut_from)));
                 if (cur === eol) {
-                   rows.push(columns);
-                   columns = [];
+                    rows.push(columns);
+                    columns = [];
                 }
                 cut_from = i + 1;
                 quote = '';
@@ -99,9 +102,10 @@
         return rows;
     }
 
-    // Export as module
-    modules("CSV", {
-      parseLine: parseLine,
-      parse: parse
-    });
-}());
+    // Export as CSV.parseLine() and CSV.parse()
+    if (global.CSV === undefined) {
+        global.CSV = {};
+    }
+    global.CSV.parseLine = parseLine;
+    global.CSV.parse = parse;
+}(this));

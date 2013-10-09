@@ -21,7 +21,7 @@
         tested = {},
         expected = {},
         output = document.querySelector("#results");
-                
+
     function print(elem, msg, eol) {
         if (eol === undefined) {
             eol = "\n";
@@ -63,13 +63,15 @@
                     ok = false;
                 }
             }
-                       
+
             if (ok) {
                 print(output, "\tOK");
             } else {
                 print(output, "\tFailed");
-                print(output, "\t\tExpected:" + JSON.stringify(expected, null, 2));
-                print(output, "\t\tReceived:" + JSON.stringify(tested, null, 2));
+                print(output, "\t\tExpected:" +
+                      JSON.stringify(expected, null, 2));
+                print(output, "\t\tReceived:" +
+                      JSON.stringify(tested, null, 2));
             }
         } else {
             print(output, i + ": error in test/expect data");
@@ -85,15 +87,15 @@
         print(output, "Test data is not balanced");
     }
     for (i = 0; i < tl && i < el; i += 1) {
-       tested = CSV.parse(test_elements[0].textContent);
-       expected = JSON.parse(expect_elements[0].textContent);
-       print(output, i + ": " + test_elements[i].textContent);
+        tested = CSV.parse(test_elements[0].textContent);
+        expected = JSON.parse(expect_elements[0].textContent);
+        print(output, i + ": " + test_elements[i].textContent);
         if (expected.length === tested.length) {
-    	    print(output, "\tOK");
+            print(output, "\tOK");
         } else {
-    	    print(output, "\tFailed");
-    	    print(output, "Expected: " + JSON.stringify(expected, null, 2));
-	    print(output, "Received: " + JSON.stringify(tested, null, 2));
+            print(output, "\tFailed");
+            print(output, "Expected: " + JSON.stringify(expected, null, 2));
+            print(output, "Received: " + JSON.stringify(tested, null, 2));
         }
     }
 }());

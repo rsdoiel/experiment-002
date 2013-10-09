@@ -10,13 +10,13 @@
     "use strict";
 
     function modules(namespace, module) {
-    	var moduleCache = outerspace.Modules || {},
+        var moduleCache = outerspace.Modules || {},
             keys = Object.keys(module),
             i = 0,
             l = 0,
-            ky; 
+            ky;
         if (moduleCache[namespace] === undefined) {
-	    moduleCache[namespace] = module;
+            moduleCache[namespace] = module;
         } else {
             for (i = 0, l = keys.length; i < l; i += 1) {
                 ky = keys[i];
@@ -29,22 +29,20 @@
                 }
             }
         }
-	outerspace.Modules = moduleCache;
+        outerspace.Modules = moduleCache;
         return outerspace;
     }
 
     function require(name) {
-    	var moduleCache;
-	if (outerspace.Modules === undefined) {
-		throw "no modules found.";
-	}
+        if (outerspace.Modules === undefined) {
+            throw "no modules found.";
+        }
 
-    	if (outerspace.Modules[name] === undefined) {
-	    throw "module named " + name + " doesn't exist";
-	}
-	return outerspace.Modules[name];
+        if (outerspace.Modules[name] === undefined) {
+            throw "module named " + name + " doesn't exist";
+        }
+        return outerspace.Modules[name];
     }
-
     outerspace.modules = modules;
     outerspace.require = require;
 }(this));
